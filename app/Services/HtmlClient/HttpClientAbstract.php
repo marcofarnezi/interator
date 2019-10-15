@@ -1,0 +1,75 @@
+<?php
+namespace App\Services\HtmlClient;
+
+use App\Contracts\HttpClientInterface;
+
+/**
+ * Class HttpClientAbstract
+ * @package App\Services\HtmlClient
+ */
+abstract class HttpClientAbstract implements HttpClientInterface
+{
+    private $client;
+    private $baseUrl;
+
+    /**
+     * HttpClientAbstract constructor.
+     * @param $baseUrl]
+     */
+    public function __construct($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+        $this->loadClient();
+    }
+
+    /**
+     * @param $url
+     */
+    public function add($url)
+    {
+        $this->addUrl($url, $this->client);
+    }
+
+    /**
+     * Exec all urls
+     */
+    public function exec()
+    {
+        $this->execAll($this->client);
+    }
+
+    /**
+     * Load a HttpClient
+     */
+    public function loadClient()
+    {
+        $clientInstanceName = $this->client();
+        $initializeParameter = $this->loadInitializeParameter($this->baseUrl);
+        $this->client = new $clientInstanceName($initializeParameter);
+    }
+
+    /**
+     * @return array
+     */
+    public function getResult() : array
+    {
+        $results = [];
+        $results['success'] = $this->getSuceess();
+        $results['errors'] = $this->getErrors();
+
+        return $results;
+    }
+
+    public abstract function addUrl($url, $client);
+
+    public abstract function execAll($client);
+
+    public abstract function client();
+
+    public abstract function loadInitializeParameter($url);
+
+    public abstract function getSuceess();
+
+    public abstract function getErrors();
+
+}
