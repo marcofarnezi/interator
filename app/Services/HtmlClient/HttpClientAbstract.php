@@ -10,17 +10,6 @@ use App\Contracts\HttpClientInterface;
 abstract class HttpClientAbstract implements HttpClientInterface
 {
     private $client;
-    private $baseUrl;
-
-    /**
-     * HttpClientAbstract constructor.
-     * @param $baseUrl]
-     */
-    public function __construct($baseUrl)
-    {
-        $this->baseUrl = $baseUrl;
-        $this->loadClient();
-    }
 
     /**
      * @param $url
@@ -41,10 +30,10 @@ abstract class HttpClientAbstract implements HttpClientInterface
     /**
      * Load a HttpClient
      */
-    public function loadClient()
+    public function loadClient($baseUrl)
     {
         $clientInstanceName = $this->client();
-        $initializeParameter = $this->loadInitializeParameter($this->baseUrl);
+        $initializeParameter = $this->loadInitializeParameter($baseUrl);
         $this->client = new $clientInstanceName($initializeParameter);
     }
 

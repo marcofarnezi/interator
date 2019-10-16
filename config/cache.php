@@ -75,6 +75,8 @@ return [
 
     ],
 
+    'compressor' => env('CACHE_COMPRESSOR', 'zip'),
+
     /*
     |--------------------------------------------------------------------------
     | Cache Key Prefix

@@ -35,4 +35,12 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'sitemap' => [
+        'cachetime' => 86400,
+    ],
+
+    'http_client' => [
+        'type' => env('HTTP_CLIENT', 'guzzle')
+    ]
+
 ];

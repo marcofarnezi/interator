@@ -2,6 +2,7 @@
 namespace App\Services\Cache;
 
 use App\Contracts\CacheInterface;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class CacheAbstract
@@ -23,30 +24,33 @@ abstract class CacheAbstract implements CacheInterface
 
     public function remove($key) : array
     {
-        $this->dropRegister($key);
+        Cache::forget($key);
+        Cache::flush();
         unset($this->registers[$key]);
         return $this->registers;
     }
 
-    public function save($key, $value)
+    public function save($key, $value, $time)
     {
         $valueCompacted = $this->compact($value);
-        return $this->saveRegister($key, $valueCompacted);
+        return Cache::add($key, $valueCompacted, $time);
     }
 
     public function get($key) : string
     {
         if (! isset($this->registers[$key])) {
-            $returnValue = $this->getRegister($key);
+            $returnValue = Cache::get($key);
             $this->registers[$key] = $this->unpack($returnValue);
         }
 
         return $this->registers[$key];
     }
 
-    public abstract function saveRegister($key, $value);
-    public abstract function dropRegister($key);
+    public function hasKeyInCache($key) : bool
+    {
+        return Cache::has($key);
+    }
+
     public abstract function zip($value);
     public abstract function unzip($value);
-    public abstract function getRegister($key);
 }

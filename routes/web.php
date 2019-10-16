@@ -15,10 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/cache', function () {
+    \Illuminate\Support\Facades\Cache::add('teste', 'teste dsadsa1', config('services.sitemap.cachetime'));
+    return \Illuminate\Support\Facades\Cache::get('teste');
+});
+
 Route::get('/test', function () {
-    $baseUrl = \App\Services\SiteMap\Investire24SiteMap::getBaseUrl();
-    $httpClient = new \App\Services\HtmlClient\GuzzleAsyncHttpClient($baseUrl);
-    $siteMap = new \App\Services\SiteMap\Investire24SiteMap($httpClient);
+    $httpClient = new \App\Services\HtmlClient\GuzzleAsyncHttpClient();
+    $cache = new \App\Services\Cache\ZipCache();
+    $siteMap = new \App\Services\SiteMap\Investire24SiteMap($httpClient, $cache);
     $urls = $siteMap->load();
     dd($siteMap->extract($urls));
 });

@@ -64,7 +64,7 @@ class GuzzleAsyncHttpClient extends HttpClientAbstract
             if ($result[$key]['value'] instanceof Response) {
                 $this->success[$key]['status_code'] = $result[$key]['value']->getStatusCode();
                 $this->success[$key]['headers'] = $result[$key]['value']->getHeaders();
-                $this->success[$key]['body'] = $result[$key]['value']->getBody()->getContents();
+                //$this->success[$key]['body'] = $result[$key]['value']->getBody()->getContents();
             }
 
             if ($result[$key]['value'] instanceof ClientException) {
