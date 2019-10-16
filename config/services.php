@@ -36,7 +36,7 @@ return [
     ],
 
     'sitemap' => [
-        'cachetime' => 86400,
+        'cachetime' => env('SITEMAP_CACHETIME', 86400),
     ],
 
     'http_client' => [
