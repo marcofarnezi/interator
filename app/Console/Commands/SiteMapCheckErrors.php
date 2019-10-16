@@ -22,7 +22,7 @@ class SiteMapCheckErrors extends Command
      *
      * @var string
      */
-    protected $description = 'Check sitemap routes Parameter{name : CamelCase}';
+    protected $description = 'Check sitemap routes - Parameter{name : CamelCase}';
 
     private $cacheFactory;
     private $httpClientFactory;
@@ -60,7 +60,11 @@ class SiteMapCheckErrors extends Command
         $this->table(['Route', 'Status Code'], $this->formatReturn($result));
 
         $this->line('');
-        $this->info('SiteMap Origin :' . $this->loader->getSiteMapUrlOrigin());
+        $this->info('Summary');
+        $this->table(['Success', 'Errors'], [[count($result['success']), count($result['errors'])]]);
+
+        $this->line('');
+        $this->info('SiteMap Origin : ' . $this->loader->getSiteMapUrlOrigin());
         $this->line('');
     }
 
