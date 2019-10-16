@@ -4,12 +4,15 @@ namespace App\Services\SiteMap;
 use App\Services\HtmlClient\HttpClientAbstract;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class Investire24SiteMap
+ * @package App\Services\SiteMap
+ */
 class Investire24SiteMap extends SiteMapAbstract
 {
     const URL_BASE = 'www.investire24.it';
     const URL_PATH = 'post-sitemap.xml';
     const URL_HTTP_TYPE = 'https';
-
 
     /**
      * @return string

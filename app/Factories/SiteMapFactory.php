@@ -12,7 +12,15 @@ use App\Services\SiteMap\SiteMapAbstract;
 class SiteMapFactory
 {
     private $type;
+
+    /**
+     * @var HttpClientAbstract
+     */
     private $httpClient;
+
+    /**
+     * @var CacheAbstract
+     */
     private $cache;
 
     /**
@@ -40,7 +48,7 @@ class SiteMapFactory
     {
         try {
             return $this->getClass();
-        } catch (\Exception $exception) {
+        } catch (\ReflectionException $exception) {
             throw $exception;
         }
     }
@@ -51,7 +59,7 @@ class SiteMapFactory
      */
     private function getClass() : SiteMapAbstract
     {
-        $className = "\App\Services\SiteMap\\" .$this->type;
+        $className = "\App\Services\SiteMap\\" . $this->type;
         $classReflection = new \ReflectionClass($className);
         return $classReflection->newInstanceArgs([$this->httpClient, $this->cache]);
     }

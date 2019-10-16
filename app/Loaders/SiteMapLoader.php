@@ -4,6 +4,7 @@ namespace App\Loaders;
 use App\Factories\CacheFactory;
 use App\Factories\HttpClientFactory;
 use App\Factories\SiteMapFactory;
+use App\Services\SiteMap\SiteMapAbstract;
 
 /**
  * Class SiteMapLoader
@@ -11,9 +12,24 @@ use App\Factories\SiteMapFactory;
  */
 class SiteMapLoader
 {
+    /**
+     * @var CacheFactory
+     */
     private $cacheFactory;
+
+    /**
+     * @var HttpClientFactory
+     */
     private $httpClientFactory;
+
+    /**
+     * @var SiteMapFactory
+     */
     private $siteMapFactory;
+
+    /**
+     * @var SiteMapAbstract
+     */
     private $siteMap;
 
     /**
@@ -21,6 +37,7 @@ class SiteMapLoader
      * @param SiteMapFactory $siteMapFactory
      * @param HttpClientFactory $httpClientFactory
      * @param CacheFactory $cacheFactory
+     * @throws \Exception
      */
     public function __construct(
         SiteMapFactory $siteMapFactory,
@@ -34,7 +51,10 @@ class SiteMapLoader
         $this->createObjs();
     }
 
-    public function getSiteMapUrlOrigin()
+    /**
+     * @return string
+     */
+    public function getSiteMapUrlOrigin() : string
     {
         $className = get_class($this->siteMap);
         return $className::getUrl();
@@ -55,7 +75,7 @@ class SiteMapLoader
      * @return array
      * @throws \Exception
      */
-    public function load()
+    public function load() : array
     {
         $urls = $this->siteMap->load();
         return $this->siteMap->extract($urls);

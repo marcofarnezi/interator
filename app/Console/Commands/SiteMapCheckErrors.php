@@ -24,9 +24,21 @@ class SiteMapCheckErrors extends Command
      */
     protected $description = 'Check sitemap routes - Parameter{name : CamelCase}';
 
+    /**
+     * @var CacheFactory
+     */
     private $cacheFactory;
+
+    /**
+     * @var HttpClientFactory
+     */
     private $httpClientFactory;
+
+    /**
+     * @var SiteMapFactory
+     */
     private $siteMapFactory;
+
     private $type;
     /**
      * @var SiteMapLoader
@@ -47,8 +59,7 @@ class SiteMapCheckErrors extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
+     * @throws \Exception
      */
     public function handle()
     {
@@ -68,7 +79,11 @@ class SiteMapCheckErrors extends Command
         $this->line('');
     }
 
-    private function load()
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    private function load() : array
     {
         $cache = $this->cacheFactory->createCache();
         $httpClient = $this->httpClientFactory->createHttpClient();
@@ -83,7 +98,11 @@ class SiteMapCheckErrors extends Command
         return $this->loader->load();
     }
 
-    private function formatReturn($result)
+    /**
+     * @param $result
+     * @return array
+     */
+    private function formatReturn($result) : array
     {
         $tbody = [];
         if (! empty($result['success'])) {

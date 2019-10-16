@@ -9,6 +9,9 @@ use App\Contracts\HttpClientInterface;
  */
 abstract class HttpClientAbstract implements HttpClientInterface
 {
+    /**
+     * @var HttpClientAbstract
+     */
     private $client;
 
     /**

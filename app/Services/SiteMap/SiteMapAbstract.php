@@ -12,7 +12,15 @@ use App\Services\HtmlClient\HttpClientAbstract;
 abstract class SiteMapAbstract implements SiteMapInterface
 {
     private static $url;
+
+    /**
+     * @var HttpClientAbstract
+     */
     private $httpClient;
+
+    /**
+     * @var CacheAbstract
+     */
     private $cache;
 
     /**
@@ -87,7 +95,10 @@ abstract class SiteMapAbstract implements SiteMapInterface
         return $result;
     }
 
-
+    /**
+     * @param $key
+     * @param array $value
+     */
     private function saveInCache($key, array $value)
     {
         $this->cache->save(
@@ -97,15 +108,21 @@ abstract class SiteMapAbstract implements SiteMapInterface
         );
     }
 
+    /**
+     * @param $key
+     * @return array
+     */
     private function loadFromCache($key) : array
     {
         $result = $this->cache->get($key);
         return json_decode($result, true);
     }
 
-
     public static abstract function url();
+
     public abstract function exec($url);
+
     public abstract function formatReturn($urlsReturned);
+
     public abstract function extractInfoByAll($urls, $httpClient);
 }

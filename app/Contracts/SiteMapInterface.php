@@ -11,9 +11,14 @@ use App\Services\HtmlClient\HttpClientAbstract;
 interface SiteMapInterface
 {
     public function __construct(HttpClientAbstract $httpClient,CacheAbstract $cache);
+
     public static function getUrl();
+
     public static function getBaseUrl();
+
     public function load();
+
     public function extract(array $urls);
+
     public function clearResults();
 }
