@@ -112,6 +112,7 @@ class SiteMapCheckErrors extends Command
                 ];
             }
         }
+        
         if (! empty($result['errors'])) {
             foreach ($result['errors'] as $http => $result) {
                 $tbody[] = [

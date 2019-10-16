@@ -58,7 +58,6 @@ class Investire24SiteMap extends SiteMapAbstract
         }
         $httpClient->exec();
         return $httpClient->getResult();
-
     }
 
     /**
